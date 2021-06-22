@@ -30,3 +30,8 @@ function visibilityToggler() {
   bookForm.classList.toggle("visible");
 }
 newBookButton.addEventListener("click", visibilityToggler);
+
+function onNewBookSubmit() {}
+bookForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+});

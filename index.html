@@ -26,6 +26,7 @@
           class="form-control"
           placeholder="Enter Book Name"
           id="bookNameInput"
+          name="title"
         />
       </div>
 
@@ -36,6 +37,7 @@
           class="form-control"
           placeholder="Enter Book Author"
           id="bookAuthorInput"
+          name="author"
         />
       </div>
 
@@ -46,11 +48,17 @@
           class="form-control"
           placeholder="Enter Number of pages in the book"
           id="bookPagesInput"
+          name="pages"
         />
       </div>
 
       <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="readStatus" />
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="readStatus"
+          name="read"
+        />
         <label class="form-check-label" for="readStatus">Already read ?</label>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
