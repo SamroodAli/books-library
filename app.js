@@ -4,6 +4,7 @@ function Book(name) {
   this.name = name
 }
 
-function addBookToLibrary() {
-  // do stuff here
+function addBookToLibrary(name) {
+  const newBook = new Book(name)
+  myLibrary.push(newBook)
 }
