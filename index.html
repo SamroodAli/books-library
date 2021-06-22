@@ -18,6 +18,8 @@
     <h1>Books library</h1>
     <ul class="books" id="books"></ul>
 
+    <button id="addBook" type="submit" class="btn btn-primary">New Book</button>
+
     <form id="newBookForm" class="hidden">
       <div class="form-group">
         <label for="bookNameInput">Enter book Name</label>
@@ -27,6 +29,7 @@
           placeholder="Enter Book Name"
           id="bookNameInput"
           name="title"
+          required
         />
       </div>
 
@@ -38,6 +41,7 @@
           placeholder="Enter Book Author"
           id="bookAuthorInput"
           name="author"
+          required
         />
       </div>
 
@@ -49,6 +53,7 @@
           placeholder="Enter Number of pages in the book"
           id="bookPagesInput"
           name="pages"
+          required
         />
       </div>
 
@@ -63,8 +68,6 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
-    <button id="addBook" type="submit" class="btn btn-primary">New Book</button>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"

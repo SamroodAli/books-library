@@ -1,11 +1,14 @@
 let myLibrary = [];
 
-function Book(name) {
+function Book(name, author, pages, read) {
   this.name = name;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
 }
 
-function addBookToLibrary(name) {
-  const newBook = new Book(name);
+function addBookToLibrary(name, author, pages, read) {
+  const newBook = new Book(name, author, pages, read);
   myLibrary.push(newBook);
 }
 
@@ -19,7 +22,8 @@ function AddToBooksList(bookName) {
 }
 
 function printBooks() {
-  myLibrary.forEach(AddToBooksList);
+  books.innerHTML = "";
+  myLibrary.forEach((book) => AddToBooksList(book.name));
 }
 
 const bookForm = document.getElementById("newBookForm");
@@ -34,4 +38,11 @@ newBookButton.addEventListener("click", visibilityToggler);
 function onNewBookSubmit() {}
 bookForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  const bookData = bookForm.elements;
+  const name = bookData[0].value;
+  const author = bookData[1].value;
+  const pages = bookData[2].value;
+  const read = Boolean(bookData[3].value);
+  addBookToLibrary(name, author, pages, read);
+  printBooks();
 });
