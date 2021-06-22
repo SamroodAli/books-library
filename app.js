@@ -26,6 +26,7 @@ const bookForm = document.getElementById("newBookForm");
 const newBookButton = document.getElementById("addBook");
 
 function visibilityToggler() {
-  newBookButton.classList.toggle("visible");
+  bookForm.classList.toggle("hidden");
+  bookForm.classList.toggle("visible");
 }
 newBookButton.addEventListener("click", visibilityToggler);
