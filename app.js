@@ -21,3 +21,11 @@ function AddToBooksList(bookName) {
 function printBooks() {
   myLibrary.forEach(AddToBooksList);
 }
+
+const bookForm = document.getElementById("newBookForm");
+const newBookButton = document.getElementById("addBook");
+
+function visibilityToggler() {
+  newBookButton.classList.toggle("visible");
+}
+newBookButton.addEventListener("click", visibilityToggler);
