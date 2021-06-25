@@ -13,16 +13,6 @@ function addBookToLibrary(name, author, pages, read) {
   myLibrary.push(newBook);
 }
 
-function AddToBooksList(book, index) {
-  const bookContent = newBookCard(book, index);
-  books.appendChild(bookContent);
-}
-
-function printBooks() {
-  books.innerHTML = '';
-  myLibrary.forEach((book, index) => AddToBooksList(book, index));
-}
-
 function element(ele, innerHtml) {
   const element = document.createElement(ele);
   element.innerHTML = innerHtml;
@@ -61,13 +51,21 @@ function newBookCard({
   bookDetails.forEach((element) => card.appendChild(element));
   const removeBtn = bookButton('Remove book', () => {
     myLibrary.splice(card.dataset.index, 1);
-    printBooks();
+    books.innerHTML = '';
+    myLibrary.forEach((book, index) => {
+      const bookContent = newBookCard(book, index);
+      books.appendChild(bookContent);
+    });
   });
 
   const changeReadBtn = bookButton('Change read status', () => {
     const currentBook = myLibrary[card.dataset.index];
     currentBook.read = !currentBook.read;
-    printBooks();
+    books.innerHTML = '';
+    myLibrary.forEach((book, index) => {
+      const bookContent = newBookCard(book, index);
+      books.appendChild(bookContent);
+    });
   });
 
   card.appendChild(removeBtn);
@@ -93,6 +91,10 @@ bookForm.addEventListener('submit', (event) => {
   const pages = bookData[2].value;
   const read = Boolean(readCheck.checked);
   addBookToLibrary(name, author, pages, read);
-  printBooks();
+  books.innerHTML = '';
+  myLibrary.forEach((book, index) => {
+    const bookContent = newBookCard(book, index);
+    books.appendChild(bookContent);
+  });
   bookForm.reset();
 });
