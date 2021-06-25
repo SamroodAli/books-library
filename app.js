@@ -46,3 +46,25 @@ bookForm.addEventListener("submit", (event) => {
   addBookToLibrary(name, author, pages, read);
   printBooks();
 });
+
+function addBookOnScreen(bookName, author, pages, read) {
+  const card = document.createElement("div");
+  card.classList.add("card");
+
+  const name = document.createElement("h5");
+  name.innerHTML = bookName;
+  name.classList.add("card-title");
+
+  const texts = new Array(3).map((ele) => {
+    const p = document.createElement("p");
+    p.classList.add("card-text");
+  });
+
+  [author, pages, read] = texts;
+  author.innerHTML = author;
+  pages.innerHTML = pages;
+  read.innerHTML = read;
+
+  card.append([name, author, pages, read]);
+  return card;
+}
