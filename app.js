@@ -62,14 +62,18 @@ function newBookCard({ name, author, pages, read }, index) {
   card.setAttribute("data-index", String(index));
 
   const bookName = document.createElement("h5");
-  bookName.innerHTML = name;
   bookName.classList.add("card-title");
+  bookName.innerHTML = name;
 
   card.appendChild(bookName);
-  const bookDetails = [author, pages, read].map((ele) => {
+  const bookDetails = [
+    { content: author, caption: "Author :" },
+    { content: pages, caption: "Number of pages :" },
+    { content: read, caption: "Read Status :" },
+  ].map((ele) => {
     const p = document.createElement("p");
     p.classList.add("card-text");
-    p.innerHTML = ele;
+    p.innerHTML = ele.caption + ele.content;
     return p;
   });
 
