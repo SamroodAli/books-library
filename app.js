@@ -47,6 +47,15 @@ bookForm.addEventListener("submit", (event) => {
   bookForm.reset();
 });
 
+function bookButton(caption, callback) {
+  const btn = document.createElement("button");
+  btn.classList.add("btn");
+  btn.classList.add("btn-primary");
+  btn.innerHTML = caption;
+  btn.addEventListener("click", callback);
+  return btn;
+}
+
 function newBookCard({ name, author, pages, read }, index) {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -57,33 +66,20 @@ function newBookCard({ name, author, pages, read }, index) {
   bookName.classList.add("card-title");
 
   card.appendChild(bookName);
-  const bookDetails = [author, pages].map((ele) => {
+  const bookDetails = [author, pages, read].map((ele) => {
     const p = document.createElement("p");
     p.classList.add("card-text");
     p.innerHTML = ele;
     return p;
   });
 
-  const readStatus = document.createElement("p");
-  readStatus.classList.add("card-text");
-  readStatus.innerHTML = `Book Read: ${read}`;
-  bookDetails.push(readStatus);
-
   bookDetails.forEach((element) => card.appendChild(element));
-  const removeBtn = document.createElement("button");
-  removeBtn.classList.add("btn");
-  removeBtn.classList.add("btn-primary");
-  removeBtn.innerHTML = "Remove Book";
-
-  removeBtn.addEventListener("click", function removeBook() {
+  const removeBtn = bookButton("Remove book", () => {
     myLibrary.splice(card.dataset.index, 1);
     printBooks();
   });
-  const changeReadBtn = document.createElement("button");
-  changeReadBtn.classList.add("btn");
-  changeReadBtn.classList.add("btn-primary");
-  changeReadBtn.innerHTML = "Read";
-  changeReadBtn.addEventListener("click", function removeBook() {
+
+  const changeReadBtn = bookButton("Change read status", () => {
     let current_book = myLibrary[card.dataset.index];
     current_book.read = !current_book.read;
     printBooks();
