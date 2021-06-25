@@ -48,7 +48,6 @@ bookForm.addEventListener("submit", (event) => {
 
 function newBookCard({ name, author, pages, read }) {
   const card = document.createElement("div");
-  card.setAttribute("data-index", String(myLibrary.length - 1));
   card.classList.add("card");
 
   const bookName = document.createElement("h5");
@@ -67,7 +66,10 @@ function newBookCard({ name, author, pages, read }) {
   const remove_button = document.createElement("button");
   remove_button.classList.add("btn");
   remove_button.classList.add("btn-primary");
-  remove_button.innerHTML = "Submit";
+  remove_button.innerHTML = "Remove Book";
+  remove_button.addEventListener("click", function removeBook() {
+    books.removeChild(card);
+  });
   card.appendChild(remove_button);
   return card;
 }
