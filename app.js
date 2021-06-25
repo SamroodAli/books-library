@@ -55,21 +55,42 @@ function newBookCard({ name, author, pages, read }) {
   bookName.classList.add("card-title");
 
   card.appendChild(bookName);
-  const bookDetails = [author, pages, read].map((ele) => {
+  const bookDetails = [author, pages].map((ele) => {
     const p = document.createElement("p");
     p.classList.add("card-text");
     p.innerHTML = ele;
     return p;
   });
 
+  const readStatus = document.createElement("p");
+  readStatus.classList.add("card-text");
+  readStatus.innerHTML = `Book Read: ${read}`;
+  bookDetails.push(readStatus);
+
   bookDetails.forEach((element) => card.appendChild(element));
-  const remove_button = document.createElement("button");
-  remove_button.classList.add("btn");
-  remove_button.classList.add("btn-primary");
-  remove_button.innerHTML = "Remove Book";
-  remove_button.addEventListener("click", function removeBook() {
+  const removeBtn = document.createElement("button");
+  removeBtn.classList.add("btn");
+  removeBtn.classList.add("btn-primary");
+  removeBtn.innerHTML = "Remove Book";
+
+  removeBtn.addEventListener("click", function removeBook() {
     books.removeChild(card);
+    myLibrary.splice(myLibrary.length - 1, 1);
   });
-  card.appendChild(remove_button);
+  const changeReadBtn = document.createElement("button");
+  changeReadBtn.classList.add("btn");
+  changeReadBtn.classList.add("btn-primary");
+  changeReadBtn.innerHTML = "Read";
+  changeReadBtn.addEventListener("click", function removeBook() {
+    readStatus.innerHTML = `Boor Read: ${!myLibrary[myLibrary.length - 1]
+      .read}`;
+    myLibrary[myLibrary.length - 1].read =
+      !myLibrary[myLibrary.length - 1].read;
+    console.dir(myLibrary[myLibrary.length - 1]);
+  });
+
+  card.appendChild(removeBtn);
+  card.appendChild(changeReadBtn);
+  console.log(myLibrary);
   return card;
 }
