@@ -14,14 +14,14 @@ function addBookToLibrary(name, author, pages, read) {
 
 const books = document.getElementById("books");
 
-function AddToBooksList(book) {
-  const bookContent = newBookCard(book);
+function AddToBooksList(book, index) {
+  const bookContent = newBookCard(book, index);
   books.appendChild(bookContent);
 }
 
 function printBooks() {
   books.innerHTML = "";
-  myLibrary.forEach((book) => AddToBooksList(book));
+  myLibrary.forEach((book, index) => AddToBooksList(book, index));
 }
 
 const bookForm = document.getElementById("newBookForm");
@@ -46,9 +46,10 @@ bookForm.addEventListener("submit", (event) => {
   bookForm.reset();
 });
 
-function newBookCard({ name, author, pages, read }) {
+function newBookCard({ name, author, pages, read }, index) {
   const card = document.createElement("div");
   card.classList.add("card");
+  card.setAttribute("data-index", String(index));
 
   const bookName = document.createElement("h5");
   bookName.innerHTML = name;
@@ -74,8 +75,8 @@ function newBookCard({ name, author, pages, read }) {
   removeBtn.innerHTML = "Remove Book";
 
   removeBtn.addEventListener("click", function removeBook() {
-    books.removeChild(card);
-    myLibrary.splice(myLibrary.length - 1, 1);
+    myLibrary.splice(card.dataset.index, 1);
+    printBooks();
   });
   const changeReadBtn = document.createElement("button");
   changeReadBtn.classList.add("btn");
