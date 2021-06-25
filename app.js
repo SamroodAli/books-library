@@ -25,6 +25,7 @@ function printBooks() {
 }
 
 const bookForm = document.getElementById("newBookForm");
+const readCheck = document.getElementById("readStatus");
 const newBookButton = document.getElementById("addBook");
 
 function visibilityToggler() {
@@ -40,7 +41,7 @@ bookForm.addEventListener("submit", (event) => {
   const name = bookData[0].value;
   const author = bookData[1].value;
   const pages = bookData[2].value;
-  const read = Boolean(bookData[3].value);
+  const read = Boolean(readCheck.checked);
   addBookToLibrary(name, author, pages, read);
   printBooks();
   bookForm.reset();
