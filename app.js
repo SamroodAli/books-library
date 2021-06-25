@@ -1,4 +1,5 @@
-let myLibrary = [];
+const myLibrary = [];
+const books = document.getElementById("books");
 
 function Book(name, author, pages, read) {
   this.name = name;
@@ -12,17 +13,9 @@ function addBookToLibrary(name, author, pages, read) {
   myLibrary.push(newBook);
 }
 
-const books = document.getElementById("books");
-
 function AddToBooksList(book, index) {
   const bookContent = newBookCard(book, index);
   books.appendChild(bookContent);
-}
-
-function element(ele, innerHtml) {
-  const element = document.createElement(ele);
-  element.innerHTML = innerHtml;
-  return element;
 }
 
 function printBooks() {
@@ -30,28 +23,11 @@ function printBooks() {
   myLibrary.forEach((book, index) => AddToBooksList(book, index));
 }
 
-const bookForm = document.getElementById("newBookForm");
-const readCheck = document.getElementById("readStatus");
-const newBookButton = document.getElementById("addBook");
-
-function visibilityToggler() {
-  bookForm.classList.toggle("hidden");
-  bookForm.classList.toggle("visible");
+function element(ele, innerHtml) {
+  const element = document.createElement(ele);
+  element.innerHTML = innerHtml;
+  return element;
 }
-newBookButton.addEventListener("click", visibilityToggler);
-
-function onNewBookSubmit() {}
-bookForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  const bookData = bookForm.elements;
-  const name = bookData[0].value;
-  const author = bookData[1].value;
-  const pages = bookData[2].value;
-  const read = Boolean(readCheck.checked);
-  addBookToLibrary(name, author, pages, read);
-  printBooks();
-  bookForm.reset();
-});
 
 function bookButton(caption, callback) {
   const btn = element("button", caption);
@@ -87,13 +63,34 @@ function newBookCard({ name, author, pages, read }, index) {
   });
 
   const changeReadBtn = bookButton("Change read status", () => {
-    let current_book = myLibrary[card.dataset.index];
-    current_book.read = !current_book.read;
+    const currentBook = myLibrary[card.dataset.index];
+    currentBook.read = !currentBook.read;
     printBooks();
   });
 
   card.appendChild(removeBtn);
   card.appendChild(changeReadBtn);
-  console.log(myLibrary);
   return card;
 }
+
+const bookForm = document.getElementById("newBookForm");
+const readCheck = document.getElementById("readStatus");
+const newBookButton = document.getElementById("addBook");
+
+function visibilityToggler() {
+  bookForm.classList.toggle("hidden");
+  bookForm.classList.toggle("visible");
+}
+newBookButton.addEventListener("click", visibilityToggler);
+
+bookForm.addEventListener("submit", (event) => {
+  const bookData = bookForm.elements;
+  event.preventDefault();
+  const name = bookData[0].value;
+  const author = bookData[1].value;
+  const pages = bookData[2].value;
+  const read = Boolean(readCheck.checked);
+  addBookToLibrary(name, author, pages, read);
+  printBooks();
+  bookForm.reset();
+});
