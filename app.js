@@ -64,5 +64,10 @@ function newBookCard({ name, author, pages, read }) {
   });
 
   bookDetails.forEach((element) => card.appendChild(element));
+  const remove_button = document.createElement("button");
+  remove_button.classList.add("btn");
+  remove_button.classList.add("btn-primary");
+  remove_button.innerHTML = "Submit";
+  card.appendChild(remove_button);
   return card;
 }
