@@ -48,6 +48,7 @@ bookForm.addEventListener("submit", (event) => {
 
 function newBookCard({ name, author, pages, read }) {
   const card = document.createElement("div");
+  card.setAttribute("data-index", String(myLibrary.length - 1));
   card.classList.add("card");
 
   const bookName = document.createElement("h5");
