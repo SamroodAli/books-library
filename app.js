@@ -19,6 +19,12 @@ function AddToBooksList(book, index) {
   books.appendChild(bookContent);
 }
 
+function element(ele, innerHtml) {
+  const element = document.createElement(ele);
+  element.innerHTML = innerHtml;
+  return element;
+}
+
 function printBooks() {
   books.innerHTML = "";
   myLibrary.forEach((book, index) => AddToBooksList(book, index));
@@ -48,10 +54,9 @@ bookForm.addEventListener("submit", (event) => {
 });
 
 function bookButton(caption, callback) {
-  const btn = document.createElement("button");
+  const btn = element("button", caption);
   btn.classList.add("btn");
   btn.classList.add("btn-primary");
-  btn.innerHTML = caption;
   btn.addEventListener("click", callback);
   return btn;
 }
@@ -61,9 +66,8 @@ function newBookCard({ name, author, pages, read }, index) {
   card.classList.add("card");
   card.setAttribute("data-index", String(index));
 
-  const bookName = document.createElement("h5");
+  const bookName = element("h5", name);
   bookName.classList.add("card-title");
-  bookName.innerHTML = name;
 
   card.appendChild(bookName);
   const bookDetails = [
@@ -71,9 +75,8 @@ function newBookCard({ name, author, pages, read }, index) {
     { content: pages, caption: "Number of pages :" },
     { content: read, caption: "Read Status :" },
   ].map((ele) => {
-    const p = document.createElement("p");
+    const p = element("p", ele.caption + ele.content);
     p.classList.add("card-text");
-    p.innerHTML = ele.caption + ele.content;
     return p;
   });
 
