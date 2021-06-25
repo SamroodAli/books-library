@@ -14,16 +14,14 @@ function addBookToLibrary(name, author, pages, read) {
 
 const books = document.getElementById("books");
 
-function AddToBooksList(bookName) {
-  const book = document.createElement("li");
-  const title = document.createTextNode(bookName);
-  book.appendChild(title);
-  books.appendChild(book);
+function AddToBooksList(book) {
+  const bookContent = newBookCard(book);
+  books.appendChild(bookContent);
 }
 
 function printBooks() {
   books.innerHTML = "";
-  myLibrary.forEach((book) => AddToBooksList(book.name));
+  myLibrary.forEach((book) => AddToBooksList(book));
 }
 
 const bookForm = document.getElementById("newBookForm");
@@ -45,26 +43,25 @@ bookForm.addEventListener("submit", (event) => {
   const read = Boolean(bookData[3].value);
   addBookToLibrary(name, author, pages, read);
   printBooks();
+  bookForm.reset();
 });
 
-function addBookOnScreen(bookName, author, pages, read) {
+function newBookCard({ name, author, pages, read }) {
   const card = document.createElement("div");
   card.classList.add("card");
 
-  const name = document.createElement("h5");
-  name.innerHTML = bookName;
-  name.classList.add("card-title");
+  const bookName = document.createElement("h5");
+  bookName.innerHTML = name;
+  bookName.classList.add("card-title");
 
-  const texts = new Array(3).map((ele) => {
+  card.appendChild(bookName);
+  const bookDetails = [author, pages, read].map((ele) => {
     const p = document.createElement("p");
     p.classList.add("card-text");
+    p.innerHTML = ele;
+    return p;
   });
 
-  [author, pages, read] = texts;
-  author.innerHTML = author;
-  pages.innerHTML = pages;
-  read.innerHTML = read;
-
-  card.append([name, author, pages, read]);
+  bookDetails.forEach((element) => card.appendChild(element));
   return card;
 }
