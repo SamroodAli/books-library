@@ -83,11 +83,9 @@ function newBookCard({ name, author, pages, read }, index) {
   changeReadBtn.classList.add("btn-primary");
   changeReadBtn.innerHTML = "Read";
   changeReadBtn.addEventListener("click", function removeBook() {
-    readStatus.innerHTML = `Boor Read: ${!myLibrary[myLibrary.length - 1]
-      .read}`;
-    myLibrary[myLibrary.length - 1].read =
-      !myLibrary[myLibrary.length - 1].read;
-    console.dir(myLibrary[myLibrary.length - 1]);
+    let current_book = myLibrary[card.dataset.index];
+    current_book.read = !current_book.read;
+    printBooks();
   });
 
   card.appendChild(removeBtn);
