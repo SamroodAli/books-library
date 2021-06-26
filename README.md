@@ -1,18 +1,13 @@
-![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Project Name
+# Books library Name
 
-> One paragraph statement about the project.
-
-![screenshot](./app_screenshot.png)
-
-Additional description about the project and its features.
+> A library collection where you can add new books with details such as author, number of pages and read status.You can later remove these books or change their read status.
 
 ## Built With
 
-- Major languages
-- Frameworks
-- Technologies used
+- HTML
+- CSS With Sass and Bootstrap
+- Javascript
 
 ## Live Demo
 
@@ -21,39 +16,35 @@ Additional description about the project and its features.
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
-
-
 To get a local copy up and running follow these simple example steps.
 
+
 ### Prerequisites
+- A browser
+- A browser
+- Node js (optional)
 
 ### Setup
+1. Clone repository: 
+```sh
+  $ git clone https://github.com/SamroodAli/books-library.git
 
-### Install
+```
+2. Change directory inside project
+```sh
+cd books-library
+```
+3. In your terminal, run 
+```sh
+npm i
+```
+## Author
 
-### Usage
+![Samrood Ali's GitHub stats](https://github-readme-stats.vercel.app/api?username=SamroodAli&count_private=true&theme=dark&show_icons=true)
 
-### Run tests
-
-### Deployment
-
-
-
-## Authors
-
-👤 **Author1**
-
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/linkedinhandle)
-
-👤 **Author2**
-
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/linkedinhandle)
+👤 **Samrood Ali**
+- GitHub: [@githubhandle](https://github.com/SamroodAli)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/samrood-ali/)
 
 ## 🤝 Contributing
 

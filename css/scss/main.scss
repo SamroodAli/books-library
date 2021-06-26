@@ -1,1 +1,31 @@
+.visible {
+  visibility: visible;
+}
 
+.hidden {
+  visibility: hidden;
+  background-color: blue;
+}
+
+body {
+  padding: 2rem;
+  background-color: indianred;
+}
+
+form {
+  max-width: 50%;
+}
+
+.books {
+  display: flex;
+  flex-wrap: wrap;
+
+  .card {
+    margin: 1rem;
+    padding: 1rem;
+
+    button {
+      margin: 1rem;
+    }
+  }
+}
