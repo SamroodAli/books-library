@@ -13,15 +13,23 @@ function addBookToLibrary(name, author, pages, read) {
   myLibrary.push(newBook);
 }
 
-function element(ele, innerHtml) {
-  const element = document.createElement(ele);
-  element.innerHTML = innerHtml;
-  return element;
+function element(ele, innerHtml, className) {
+  const newElement = document.createElement(ele);
+
+  if (innerHtml) {
+    newElement.innerHTML = innerHtml;
+  }
+
+  if (className) {
+    className
+      .split(" ")
+      .forEach((classKeyWord) => newElement.classList.add(classKeyWord));
+  }
+  return newElement;
 }
 
 function bookButton(caption, callback) {
-  const btn = element("button", caption);
-  btn.className = "btn btn-primary";
+  const btn = element("button", caption, "btn btn-primary");
   btn.addEventListener("click", callback);
   return btn;
 }
@@ -35,34 +43,29 @@ function printBooks() {
 }
 
 function newBookCard({ name, author, pages, read }, index) {
-  // closures
-
   function insertToCard(element) {
     card.appendChild(element);
   }
 
   function bookCaption(ele) {
-    const p = element("p", ele.caption + ele.content);
-    p.classList.add("card-text");
+    const p = element("p", ele.caption + ele.content, "card-text");
     return p;
   }
 
   function newCard() {
-    const card = document.createElement("div");
-    card.classList.add("card");
+    const card = element("div", undefined, "card");
     card.setAttribute("data-index", String(index));
     return card;
   }
 
   function newBook() {
-    const bookName = element("h5", name);
-    bookName.classList.add("card-title");
+    const bookName = element("h5", name, "card-title");
     insertToCard(bookName);
     return bookName;
   }
 
-  function newButton(title, cb) {
-    const button = bookButton(title, cb);
+  function newButton(title, callback) {
+    const button = bookButton(title, callback);
     insertToCard(button);
   }
 
