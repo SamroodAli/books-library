@@ -37,6 +37,10 @@ function printBooks() {
 function newBookCard({ name, author, pages, read }, index) {
   // closures
 
+  function insertToCard(element) {
+    card.appendChild(element);
+  }
+
   function bookCaption(ele) {
     const p = element("p", ele.caption + ele.content);
     p.classList.add("card-text");
@@ -53,13 +57,13 @@ function newBookCard({ name, author, pages, read }, index) {
   function newBook() {
     const bookName = element("h5", name);
     bookName.classList.add("card-title");
-    card.appendChild(bookName);
+    insertToCard(bookName);
     return bookName;
   }
 
   function newButton(title, cb) {
     const button = bookButton(title, cb);
-    card.appendChild(button);
+    insertToCard(button);
   }
 
   function changeReadStatus() {
@@ -82,7 +86,7 @@ function newBookCard({ name, author, pages, read }, index) {
     { content: read, caption: "Read Status :" },
   ].map(bookCaption);
 
-  bookDetails.forEach((element) => card.appendChild(element));
+  bookDetails.forEach(insertToCard);
 
   newButton("Remove book", removeBook);
   newButton("Change read status", changeReadStatus);
@@ -98,6 +102,7 @@ function visibilityToggler() {
   bookForm.classList.toggle("hidden");
   bookForm.classList.toggle("visible");
 }
+
 newBookButton.addEventListener("click", visibilityToggler);
 
 bookForm.addEventListener("submit", (event) => {
