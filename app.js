@@ -1,5 +1,5 @@
 const myLibrary = [];
-const books = document.getElementById('books');
+const books = document.getElementById("books");
 
 function element(ele, innerHtml, className) {
   const newElement = document.createElement(ele);
@@ -10,21 +10,21 @@ function element(ele, innerHtml, className) {
 
   if (className) {
     className
-      .split(' ')
+      .split(" ")
       .forEach((classKeyWord) => newElement.classList.add(classKeyWord));
   }
   return newElement;
 }
 
 function createCard(index) {
-  const card = element('div', undefined, 'card');
-  card.setAttribute('data-index', String(index));
+  const card = element("div", undefined, "card");
+  card.setAttribute("data-index", String(index));
   return card;
 }
 
 function bookButton(caption, callback) {
-  const btn = element('button', caption, 'btn btn-primary');
-  btn.addEventListener('click', callback);
+  const btn = element("button", caption, "btn btn-primary");
+  btn.addEventListener("click", callback);
   return btn;
 }
 
@@ -32,12 +32,12 @@ function insertTo(parent, child) {
   parent.appendChild(child);
 }
 
-function bookCaption(ele) {
-  return element('p', ele.caption + ele.content, 'card-text');
+function asBookCaption(ele) {
+  return element("p", ele.caption + ele.content, "card-text");
 }
 
 function newBookIn(card, book) {
-  const bookName = element('h5', book, 'card-title');
+  const bookName = element("h5", book, "card-title");
   insertTo(card, bookName);
   return bookName;
 }
@@ -48,7 +48,7 @@ function newButtonIn(card, title, callback) {
 }
 
 function printBooksAs(newBookCard) {
-  books.innerHTML = '';
+  books.innerHTML = "";
   myLibrary.forEach((book, index) => {
     const bookContent = newBookCard(index, book);
     books.appendChild(bookContent);
@@ -66,22 +66,6 @@ function removeBookFrom(card, newBookCard) {
   printBooksAs(newBookCard);
 }
 
-function newBookCard(index, {
-  book, author, pages, read,
-}) {
-  const currentCard = createCard(index);
-  newBookIn(currentCard, book);
-  const bookDetails = [
-    { content: author, caption: 'Author :' },
-    { content: pages, caption: 'Number of pages :' },
-    { content: read, caption: 'Read Status :' },
-  ].map(bookCaption);
-  bookDetails.forEach((book) => insertTo(currentCard, book));
-  newButtonIn(currentCard, 'Remove book', () => removeBookFrom(newBookCard, currentCard));
-  newButtonIn(currentCard, 'Change read status', () => changeReadStatusIn(newBookCard, currentCard));
-  return currentCard;
-}
-
 function Book(name, author, pages, read) {
   this.name = name;
   this.author = author;
@@ -92,6 +76,33 @@ function Book(name, author, pages, read) {
 function addBookToLibrary(name, author, pages, read) {
   const newBook = new Book(name, author, pages, read);
   myLibrary.push(newBook);
+}
+
+function AddbookButtonGroupTo(currentCard, newBookCard) {
+  newButtonIn(currentCard, "Remove book", () =>
+    removeBookFrom(newBookCard, currentCard)
+  );
+  newButtonIn(currentCard, "Change read status", () =>
+    changeReadStatusIn(newBookCard, currentCard)
+  );
+}
+
+function newBookCard(index, { name, author, pages, read }) {
+  const currentCard = createCard(index);
+  newBookIn(currentCard, name);
+  const bookDetails = [
+    { content: author, caption: "Author :" },
+    { content: pages, caption: "Number of pages :" },
+    { content: read, caption: "Read Status :" },
+  ].map(asBookCaption);
+  bookDetails.forEach((book) => insertTo(currentCard, book));
+  AddbookButtonGroupTo(currentCard, newBookCard);
+  return currentCard;
+}
+
+function toggleVisibilityOf(form) {
+  form.classList.toggle("hidden");
+  form.classList.toggle("visible");
 }
 
 function submitBook(bookInfo, readStatus) {
@@ -108,13 +119,8 @@ function submit(form, event, readCheck) {
   form.reset();
 }
 
-function toggleVisibilityOf(form) {
-  form.classList.toggle('hidden');
-  form.classList.toggle('visible');
-}
-
-const form = document.getElementById('newBookForm');
-const readCheck = document.getElementById('readStatus');
-const newBookButton = document.getElementById('addBook');
-newBookButton.addEventListener('click', () => toggleVisibilityOf(form));
-form.addEventListener('submit', (event) => submit(form, event, readCheck));
+const form = document.getElementById("newBookForm");
+const readCheck = document.getElementById("readStatus");
+const newBookButton = document.getElementById("addBook");
+newBookButton.addEventListener("click", () => toggleVisibilityOf(form));
+form.addEventListener("submit", (event) => submit(form, event, readCheck));
