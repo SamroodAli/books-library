@@ -35,38 +35,57 @@ function printBooks() {
 }
 
 function newBookCard({ name, author, pages, read }, index) {
-  const card = document.createElement("div");
-  card.classList.add("card");
-  card.setAttribute("data-index", String(index));
+  // closures
+  function changeReadStatus() {
+    const currentBook = myLibrary[card.dataset.index];
+    currentBook.read = !currentBook.read;
+    printBooks();
+  }
 
-  const bookName = element("h5", name);
-  bookName.classList.add("card-title");
+  function removeBook() {
+    myLibrary.splice(card.dataset.index, 1);
+    printBooks();
+  }
 
-  card.appendChild(bookName);
+  function bookCaption(ele) {
+    const p = element("p", ele.caption + ele.content);
+    p.classList.add("card-text");
+    return p;
+  }
+
+  function newCard() {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.setAttribute("data-index", String(index));
+    return card;
+  }
+
+  function newBook() {
+    const bookName = element("h5", name);
+    bookName.classList.add("card-title");
+    card.appendChild(bookName);
+    return bookName;
+  }
+
+  function newButton(title, cb) {
+    const button = bookButton(title, cb);
+    card.appendChild(button);
+  }
+
+  const card = newCard();
+  newBook();
+
   const bookDetails = [
     { content: author, caption: "Author :" },
     { content: pages, caption: "Number of pages :" },
     { content: read, caption: "Read Status :" },
-  ].map((ele) => {
-    const p = element("p", ele.caption + ele.content);
-    p.classList.add("card-text");
-    return p;
-  });
+  ].map(bookCaption);
 
   bookDetails.forEach((element) => card.appendChild(element));
-  const removeBtn = bookButton("Remove book", () => {
-    myLibrary.splice(card.dataset.index, 1);
-    printBooks();
-  });
 
-  const changeReadBtn = bookButton("Change read status", () => {
-    const currentBook = myLibrary[card.dataset.index];
-    currentBook.read = !currentBook.read;
-    printBooks();
-  });
+  newButton("Remove book", removeBook);
+  newButton("Change read status", changeReadStatus);
 
-  card.appendChild(removeBtn);
-  card.appendChild(changeReadBtn);
   return card;
 }
 
