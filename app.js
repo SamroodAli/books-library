@@ -82,17 +82,6 @@ function newBookCard(index, {
   return currentCard;
 }
 
-const form = document.getElementById('newBookForm');
-const readCheck = document.getElementById('readStatus');
-const newBookButton = document.getElementById('addBook');
-
-function visibilityToggler() {
-  form.classList.toggle('hidden');
-  form.classList.toggle('visible');
-}
-
-newBookButton.addEventListener('click', visibilityToggler);
-
 function Book(name, author, pages, read) {
   this.name = name;
   this.author = author;
@@ -111,7 +100,7 @@ function submitBook(bookInfo, readStatus) {
   printBooksAs(newBookCard);
 }
 
-function onFormSubmit(event) {
+function submit(form, event, readCheck) {
   event.preventDefault();
   const bookInfo = Array.from(form.elements).map((ele) => ele.value);
   const readStatus = Boolean(readCheck.checked);
@@ -119,4 +108,13 @@ function onFormSubmit(event) {
   form.reset();
 }
 
-form.addEventListener('submit', onFormSubmit);
+function toggleVisibilityOf(form) {
+  form.classList.toggle('hidden');
+  form.classList.toggle('visible');
+}
+
+const form = document.getElementById('newBookForm');
+const readCheck = document.getElementById('readStatus');
+const newBookButton = document.getElementById('addBook');
+newBookButton.addEventListener('click', () => toggleVisibilityOf(form));
+form.addEventListener('submit', (event) => submit(form, event, readCheck));
