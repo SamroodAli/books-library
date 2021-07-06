@@ -106,25 +106,29 @@ function printBooks() {
   });
 }
 
-const bookForm = document.getElementById('newBookForm');
+const form = document.getElementById('newBookForm');
 const readCheck = document.getElementById('readStatus');
 const newBookButton = document.getElementById('addBook');
 
 function visibilityToggler() {
-  bookForm.classList.toggle('hidden');
-  bookForm.classList.toggle('visible');
+  form.classList.toggle('hidden');
+  form.classList.toggle('visible');
 }
 
 newBookButton.addEventListener('click', visibilityToggler);
 
-bookForm.addEventListener('submit', (event) => {
-  const bookData = bookForm.elements;
-  event.preventDefault();
-  const name = bookData[0].value;
-  const author = bookData[1].value;
-  const pages = bookData[2].value;
-  const read = Boolean(readCheck.checked);
-  addBookToLibrary(name, author, pages, read);
+function submitBook(bookInfo, readStatus) {
+  const [name, author, pages] = bookInfo;
+  addBookToLibrary(name, author, pages, readStatus);
   printBooks();
-  bookForm.reset();
-});
+}
+
+function onFormSubmit(event) {
+  event.preventDefault();
+  const bookInfo = Array.from(form.elements).map((ele) => ele.value);
+  const readStatus = Boolean(readCheck.checked);
+  submitBook(bookInfo, readStatus);
+  form.reset();
+}
+
+form.addEventListener('submit', onFormSubmit);
