@@ -16,7 +16,7 @@ function element(ele, innerHtml, className) {
   return newElement;
 }
 
-function newCard(index) {
+function createCard(index) {
   const card = element('div', undefined, 'card');
   card.setAttribute('data-index', String(index));
   return card;
@@ -47,43 +47,39 @@ function newButtonIn(card, title, callback) {
   insertTo(card, button);
 }
 
-function changeReadStatusIn(card) {
-  const currentBook = myLibrary[card.dataset.index];
-  currentBook.read = !currentBook.read;
-  printBooks();
-}
-
-function removeBookFrom(card) {
-  myLibrary.splice(card.dataset.index, 1);
-  printBooks();
-}
-
-function newBookCard(index, {
-  name, author, pages, read,
-}) {
-  const card = newCard(index);
-  newBookIn(card, name);
-
-  const bookDetails = [
-    { content: author, caption: 'Author :' },
-    { content: pages, caption: 'Number of pages :' },
-    { content: read, caption: 'Read Status :' },
-  ].map(bookCaption);
-
-  bookDetails.forEach((book) => insertTo(card, book));
-
-  newButtonIn(card, 'Remove book', () => removeBookFrom(card));
-  newButtonIn(card, 'Change read status', () => changeReadStatusIn(card));
-
-  return card;
-}
-
-function printBooks() {
+function printBooksAs(newBookCard) {
   books.innerHTML = '';
   myLibrary.forEach((book, index) => {
     const bookContent = newBookCard(index, book);
     books.appendChild(bookContent);
   });
+}
+
+function changeReadStatusIn(card, newBookCard) {
+  const currentBook = myLibrary[card.dataset.index];
+  currentBook.read = !currentBook.read;
+  printBooksAs(newBookCard);
+}
+
+function removeBookFrom(card, newBookCard) {
+  myLibrary.splice(card.dataset.index, 1);
+  printBooksAs(newBookCard);
+}
+
+function newBookCard(index, {
+  book, author, pages, read,
+}) {
+  const currentCard = createCard(index);
+  newBookIn(currentCard, book);
+  const bookDetails = [
+    { content: author, caption: 'Author :' },
+    { content: pages, caption: 'Number of pages :' },
+    { content: read, caption: 'Read Status :' },
+  ].map(bookCaption);
+  bookDetails.forEach((book) => insertTo(currentCard, book));
+  newButtonIn(currentCard, 'Remove book', () => removeBookFrom(newBookCard, currentCard));
+  newButtonIn(currentCard, 'Change read status', () => changeReadStatusIn(newBookCard, currentCard));
+  return currentCard;
 }
 
 const form = document.getElementById('newBookForm');
@@ -112,7 +108,7 @@ function addBookToLibrary(name, author, pages, read) {
 function submitBook(bookInfo, readStatus) {
   const [name, author, pages] = bookInfo;
   addBookToLibrary(name, author, pages, readStatus);
-  printBooks();
+  printBooksAs(newBookCard);
 }
 
 function onFormSubmit(event) {
