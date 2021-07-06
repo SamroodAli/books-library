@@ -1,5 +1,5 @@
 const myLibrary = [];
-const books = document.getElementById('books');
+const books = document.getElementById("books");
 
 function Book(name, author, pages, read) {
   this.name = name;
@@ -22,32 +22,38 @@ function element(ele, innerHtml, className) {
 
   if (className) {
     className
-      .split(' ')
+      .split(" ")
       .forEach((classKeyWord) => newElement.classList.add(classKeyWord));
   }
   return newElement;
 }
 
 function bookButton(caption, callback) {
-  const btn = element('button', caption, 'btn btn-primary');
-  btn.addEventListener('click', callback);
+  const btn = element("button", caption, "btn btn-primary");
+  btn.addEventListener("click", callback);
   return btn;
 }
 
 function printBooks() {
-  books.innerHTML = '';
+  books.innerHTML = "";
   myLibrary.forEach((book, index) => {
     const bookContent = newBookCard(book, index);
     books.appendChild(bookContent);
   });
 }
 
-function newBookCard({
-  name, author, pages, read,
-}, index) {
+function newBookCard({ name, author, pages, read }, index) {
+  function reprintBooks() {
+    books.innerHTML = "";
+    myLibrary.forEach((book, index) => {
+      const bookContent = newBookCard(book, index);
+      books.appendChild(bookContent);
+    });
+  }
+
   function newCard() {
-    const card = element('div', undefined, 'card');
-    card.setAttribute('data-index', String(index));
+    const card = element("div", undefined, "card");
+    card.setAttribute("data-index", String(index));
     return card;
   }
   const card = newCard();
@@ -57,11 +63,11 @@ function newBookCard({
   }
 
   function bookCaption(ele) {
-    return element('p', ele.caption + ele.content, 'card-text');
+    return element("p", ele.caption + ele.content, "card-text");
   }
 
   function newBook() {
-    const bookName = element('h5', name, 'card-title');
+    const bookName = element("h5", name, "card-title");
     insertToCard(bookName);
     return bookName;
   }
@@ -74,42 +80,42 @@ function newBookCard({
   function changeReadStatus() {
     const currentBook = myLibrary[card.dataset.index];
     currentBook.read = !currentBook.read;
-    printBooks();
+    reprintBooks();
   }
 
   function removeBook() {
     myLibrary.splice(card.dataset.index, 1);
-    printBooks();
+    reprintBooks();
   }
 
   newBook();
 
   const bookDetails = [
-    { content: author, caption: 'Author :' },
-    { content: pages, caption: 'Number of pages :' },
-    { content: read, caption: 'Read Status :' },
+    { content: author, caption: "Author :" },
+    { content: pages, caption: "Number of pages :" },
+    { content: read, caption: "Read Status :" },
   ].map(bookCaption);
 
   bookDetails.forEach(insertToCard);
 
-  newButton('Remove book', removeBook);
-  newButton('Change read status', changeReadStatus);
+  newButton("Remove book", removeBook);
+  newButton("Change read status", changeReadStatus);
 
   return card;
 }
 
-const bookForm = document.getElementById('newBookForm');
-const readCheck = document.getElementById('readStatus');
-const newBookButton = document.getElementById('addBook');
+const bookForm = document.getElementById("newBookForm");
+const readCheck = document.getElementById("readStatus");
+const newBookButton = document.getElementById("addBook");
 
 function visibilityToggler() {
-  bookForm.classList.toggle('hidden');
-  bookForm.classList.toggle('visible');
+  bookForm.classList.toggle("hidden");
+  bookForm.classList.toggle("visible");
 }
 
-newBookButton.addEventListener('click', visibilityToggler);
+newBookButton.addEventListener("click", visibilityToggler);
 
-bookForm.addEventListener('submit', (event) => {
+bookForm.addEventListener("submit", (event) => {
   const bookData = bookForm.elements;
   event.preventDefault();
   const name = bookData[0].value;
