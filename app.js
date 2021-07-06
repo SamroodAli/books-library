@@ -28,8 +28,8 @@ function bookButton(caption, callback) {
   return btn;
 }
 
-function insertTo(card, element) {
-  card.appendChild(element);
+function insertTo(parent, child) {
+  parent.appendChild(child);
 }
 
 function bookCaption(ele) {
