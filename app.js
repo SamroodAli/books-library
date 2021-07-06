@@ -45,19 +45,19 @@ function printBooks() {
 function newBookCard({
   name, author, pages, read,
 }, index) {
+  function newCard() {
+    const card = element('div', undefined, 'card');
+    card.setAttribute('data-index', String(index));
+    return card;
+  }
+  const card = newCard();
+
   function insertToCard(element) {
     card.appendChild(element);
   }
 
   function bookCaption(ele) {
-    const p = element('p', ele.caption + ele.content, 'card-text');
-    return p;
-  }
-
-  function newCard() {
-    const card = element('div', undefined, 'card');
-    card.setAttribute('data-index', String(index));
-    return card;
+    return element('p', ele.caption + ele.content, 'card-text');
   }
 
   function newBook() {
@@ -82,7 +82,6 @@ function newBookCard({
     printBooks();
   }
 
-  const card = newCard();
   newBook();
 
   const bookDetails = [
