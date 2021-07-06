@@ -1,18 +1,6 @@
 const myLibrary = [];
 const books = document.getElementById('books');
 
-function Book(name, author, pages, read) {
-  this.name = name;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-}
-
-function addBookToLibrary(name, author, pages, read) {
-  const newBook = new Book(name, author, pages, read);
-  myLibrary.push(newBook);
-}
-
 function element(ele, innerHtml, className) {
   const newElement = document.createElement(ele);
 
@@ -28,15 +16,7 @@ function element(ele, innerHtml, className) {
   return newElement;
 }
 
-function bookButton(caption, callback) {
-  const btn = element('button', caption, 'btn btn-primary');
-  btn.addEventListener('click', callback);
-  return btn;
-}
-
-function newBookCard({
-  name, author, pages, read,
-}, index) {
+function newBookCard(bookInfo, index) {
   function reprintBooks() {
     books.innerHTML = '';
     myLibrary.forEach((book, index) => {
@@ -50,7 +30,17 @@ function newBookCard({
     card.setAttribute('data-index', String(index));
     return card;
   }
+
+  function bookButton(caption, callback) {
+    const btn = element('button', caption, 'btn btn-primary');
+    btn.addEventListener('click', callback);
+    return btn;
+  }
+
   const card = newCard();
+  const {
+    name, author, pages, read,
+  } = bookInfo;
 
   function insertToCard(element) {
     card.appendChild(element);
@@ -116,6 +106,18 @@ function visibilityToggler() {
 }
 
 newBookButton.addEventListener('click', visibilityToggler);
+
+function Book(name, author, pages, read) {
+  this.name = name;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+}
+
+function addBookToLibrary(name, author, pages, read) {
+  const newBook = new Book(name, author, pages, read);
+  myLibrary.push(newBook);
+}
 
 function submitBook(bookInfo, readStatus) {
   const [name, author, pages] = bookInfo;
