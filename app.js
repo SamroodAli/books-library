@@ -36,16 +36,6 @@ function printBooks() {
 
 function newBookCard({ name, author, pages, read }, index) {
   // closures
-  function changeReadStatus() {
-    const currentBook = myLibrary[card.dataset.index];
-    currentBook.read = !currentBook.read;
-    printBooks();
-  }
-
-  function removeBook() {
-    myLibrary.splice(card.dataset.index, 1);
-    printBooks();
-  }
 
   function bookCaption(ele) {
     const p = element("p", ele.caption + ele.content);
@@ -70,6 +60,17 @@ function newBookCard({ name, author, pages, read }, index) {
   function newButton(title, cb) {
     const button = bookButton(title, cb);
     card.appendChild(button);
+  }
+
+  function changeReadStatus() {
+    const currentBook = myLibrary[card.dataset.index];
+    currentBook.read = !currentBook.read;
+    printBooks();
+  }
+
+  function removeBook() {
+    myLibrary.splice(card.dataset.index, 1);
+    printBooks();
   }
 
   const card = newCard();
@@ -107,10 +108,6 @@ bookForm.addEventListener("submit", (event) => {
   const pages = bookData[2].value;
   const read = Boolean(readCheck.checked);
   addBookToLibrary(name, author, pages, read);
-  books.innerHTML = "";
-  myLibrary.forEach((book, index) => {
-    const bookContent = newBookCard(book, index);
-    books.appendChild(bookContent);
-  });
+  printBooks();
   bookForm.reset();
 });
