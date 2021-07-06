@@ -16,63 +16,53 @@ function element(ele, innerHtml, className) {
   return newElement;
 }
 
-function newBookCard(bookInfo, index) {
-  function reprintBooks() {
-    books.innerHTML = '';
-    myLibrary.forEach((book, index) => {
-      const bookContent = newBookCard(book, index);
-      books.appendChild(bookContent);
-    });
-  }
+function newCard(index) {
+  const card = element('div', undefined, 'card');
+  card.setAttribute('data-index', String(index));
+  return card;
+}
 
-  function newCard() {
-    const card = element('div', undefined, 'card');
-    card.setAttribute('data-index', String(index));
-    return card;
-  }
+function bookButton(caption, callback) {
+  const btn = element('button', caption, 'btn btn-primary');
+  btn.addEventListener('click', callback);
+  return btn;
+}
 
-  function bookButton(caption, callback) {
-    const btn = element('button', caption, 'btn btn-primary');
-    btn.addEventListener('click', callback);
-    return btn;
-  }
+function insertTo(card, element) {
+  card.appendChild(element);
+}
 
-  const card = newCard();
-  const {
-    name, author, pages, read,
-  } = bookInfo;
+function bookCaption(ele) {
+  return element('p', ele.caption + ele.content, 'card-text');
+}
 
-  function insertToCard(element) {
-    card.appendChild(element);
-  }
+function newBookIn(card, book) {
+  const bookName = element('h5', book, 'card-title');
+  insertTo(card, bookName);
+  return bookName;
+}
 
-  function bookCaption(ele) {
-    return element('p', ele.caption + ele.content, 'card-text');
-  }
+function newButtonIn(card, title, callback) {
+  const button = bookButton(title, callback);
+  insertTo(card, button);
+}
 
-  function newBook() {
-    const bookName = element('h5', name, 'card-title');
-    insertToCard(bookName);
-    return bookName;
-  }
+function changeReadStatusIn(card) {
+  const currentBook = myLibrary[card.dataset.index];
+  currentBook.read = !currentBook.read;
+  printBooks();
+}
 
-  function newButton(title, callback) {
-    const button = bookButton(title, callback);
-    insertToCard(button);
-  }
+function removeBookFrom(card) {
+  myLibrary.splice(card.dataset.index, 1);
+  printBooks();
+}
 
-  function changeReadStatus() {
-    const currentBook = myLibrary[card.dataset.index];
-    currentBook.read = !currentBook.read;
-    reprintBooks();
-  }
-
-  function removeBook() {
-    myLibrary.splice(card.dataset.index, 1);
-    reprintBooks();
-  }
-
-  newBook();
+function newBookCard(index, {
+  name, author, pages, read,
+}) {
+  const card = newCard(index);
+  newBookIn(card, name);
 
   const bookDetails = [
     { content: author, caption: 'Author :' },
@@ -80,10 +70,10 @@ function newBookCard(bookInfo, index) {
     { content: read, caption: 'Read Status :' },
   ].map(bookCaption);
 
-  bookDetails.forEach(insertToCard);
+  bookDetails.forEach((book) => insertTo(card, book));
 
-  newButton('Remove book', removeBook);
-  newButton('Change read status', changeReadStatus);
+  newButtonIn(card, 'Remove book', () => removeBookFrom(card));
+  newButtonIn(card, 'Change read status', () => changeReadStatusIn(card));
 
   return card;
 }
@@ -91,7 +81,7 @@ function newBookCard(bookInfo, index) {
 function printBooks() {
   books.innerHTML = '';
   myLibrary.forEach((book, index) => {
-    const bookContent = newBookCard(book, index);
+    const bookContent = newBookCard(index, book);
     books.appendChild(bookContent);
   });
 }
